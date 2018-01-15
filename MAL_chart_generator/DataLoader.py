@@ -16,25 +16,26 @@ def load_list_soup(user_name, user_passwd, list_type, **kwargs):
             retries_number - number of retries to get list from MAL server
             retry_interval - time beetwen consecutive retries
             retry_timeout  - timeout of single retry
+            custom_user    - user whose list will be downloaded
 
     """
 
     retries =        kwargs.get('retries_number', 5)
     retry_interval = kwargs.get('retry_interval', 3)
     timeout  =       kwargs.get('retry_timeout', 10)
-
+    user =           kwargs.get('custom_user', user_name)
 
     url = ('http://myanimelist.net/malappinfo.php'
-           + '?u='    + user_name
+           + '?u='    + user
            + '&status=all'
            + '&type=' + list_type)
 
-    for time in range(1, retries):
+    for retry in range(1, retries):
         try:
             response = requests.get(url,
                                     auth=(user_name, user_passwd),
                                     timeout=timeout)
-        except handled_exceptions:
+        except requests.HTTPError:
             time.sleep(retry_interval)
         else:
             return BeautifulSoup(response.content, "html.parser")
