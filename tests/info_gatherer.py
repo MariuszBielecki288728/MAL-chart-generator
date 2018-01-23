@@ -1,7 +1,7 @@
 
 import os
 import sys
-import pickle
+import json
 sys.path.insert(0,
                 os.path.abspath(os.path.join(os.path.dirname(__file__),
                                              '..')))
@@ -9,23 +9,24 @@ from MAL_chart_generator import DataLoader
 from MAL_chart_generator import plots_generator
 
 
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(1000000)
 
 
 def save_obj(obj, name):
-    with open(name + '.pkl', 'wb') as f:
-        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+    with open(name + '.json', 'w') as f:
+        f.write(json.dumps(obj))
 
 
 def load_obj(name):
-    with open(name + '.pkl', 'rb') as f:
-        return pickle.load(f)
+    with open(name + '.json', 'r') as f:
+        return json.loads(f.read())
 
 
 user = 'MariuszB'
-passwd = 'tCa7osGcXkkQTUCB'
+passwd = ''
 
-user_info, manga_dict = DataLoader.gather_mangas_info(user, passwd, 'manga')
-# plots_generator.draw_genres_pie(manga_dict)
-save_obj(manga_dict, 'test_cache')
-print(load_obj('test_cache'))
+# user_info, manga_dict = DataLoader.gather_mangas_info(user, passwd, 'manga')
+
+# save_obj(manga_dict, 'test_cache')
+manga_dict = load_obj('test_save')
+plots_generator.draw_genres_pie(manga_dict)

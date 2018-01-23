@@ -111,15 +111,6 @@ def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
         ranked = divs[6].span.next_sibling.string.strip()
         popularity = divs[7].span.next_sibling.string.strip()
 
-        """url = 'https://myanimelist.net/api/manga/search.xml'
-        params = {'q': name}
-        title_ext_data_soup = request_retryer(url, params, user, passwd)
-
-        entry = title_ext_data_soup.manga.entry
-        start_date = title_ext_data_soup.start_date.string
-        end_date = title_ext_data_soup.end_date.string
-        image = title_ext_data_soup.image.string"""
-
         manga_dict[db_id] = {'name': name,
                              'genres': genres_list,
                              'avg_score': avg_score,

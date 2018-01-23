@@ -8,10 +8,13 @@ def draw_genres_pie(mangas_dict):
         for genre in info_dict['genres']:
             try:
                 appear_freq_dict[genre] = appear_freq_dict[genre] + 1
+                print(appear_freq_dict[genre])
             except KeyError:
                 appear_freq_dict[genre] = 1
             count += 1
-    sorted_genres = sorted(appear_freq_dict.items(), key=lambda x: x[1])[:5]
+    sorted_genres = sorted(appear_freq_dict.items(),
+                           key=lambda x: x[1],
+                           reverse=True)[:9]
 
     labels = [item[0] for item in sorted_genres]
     labels.append('Other')
@@ -20,5 +23,5 @@ def draw_genres_pie(mangas_dict):
     print(count)
     fracs = [round((item[1] / count) * 100, 2) for item in sorted_genres]
     fracs.append(100 - sum(fracs))
-    plt.pie(fracs, labels=labels, autopct='%1.1f%%', shadow=True)
+    plt.pie(fracs, labels=labels, autopct='%1.1f%%', shadow=False)
     plt.show()
