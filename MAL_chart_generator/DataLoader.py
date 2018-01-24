@@ -78,6 +78,7 @@ def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
     manga_list_soup = request_retryer(url, params=params)
     user_info_soup = manga_list_soup.myinfo
     mangas = manga_list_soup.find_all('manga')
+    # 1/watching, 2/completed, 3/onhold, 4/dropped, 6/plantowatch
 
     manga_dict = dict()
 
@@ -85,6 +86,10 @@ def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
     bar = progressbar.ProgressBar(max_value=mangas_num)
 
     for count, item in enumerate(mangas):
+        bar.update(count)
+
+        if item.my_status.string not in ['1', '2']:
+            continue
 
         db_id = item.series_mangadb_id.string
         name = item.series_title.string
@@ -123,7 +128,6 @@ def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
                              'user_start_date': user_start_date,
                              'user_end_date': user_end_date,
                              'user_score': user_score}
-        bar.update(count)
         time.sleep(random.randint(4, 6))
 
     bar.update(mangas_num)
