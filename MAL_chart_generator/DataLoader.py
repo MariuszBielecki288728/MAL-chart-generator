@@ -52,7 +52,7 @@ def request_retryer(url, user_name='', user_passwd='', **kwargs):
 
 def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
     """
-        Gathers information about mangas (from list) to (soup, dict)
+        Gathers information about user and mangas (from list) to (soup, dict)
         shows progress bar in console
 
         Arguments:
@@ -61,9 +61,6 @@ def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
             list_type - type of list (manga or anime)
 
         Optional arguments:
-            retries_number - number of retries to get list from MAL server
-            retry_interval - time beetwen consecutive retries
-            retry_timeout  - timeout of single retry
             custom_user    - user whose list will be downloaded
 
     """
