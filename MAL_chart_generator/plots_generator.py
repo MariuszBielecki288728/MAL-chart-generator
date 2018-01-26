@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import seaborn as sns
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
@@ -6,6 +7,7 @@ from dateutil.parser import parse
 
 def draw_genres_pie(mangas_dict, file_path):
     plt.ioff()
+    sns.set_style("dark")
     appear_freq_dict = dict()
     count = 0
     for title_id, info_dict in mangas_dict.items():
@@ -27,8 +29,9 @@ def draw_genres_pie(mangas_dict, file_path):
     fracs.append(100 - sum(fracs))
 
     fig = plt.pie(fracs, labels=labels, autopct='%1.1f%%', shadow=False)
-    fig.savefig(file_path)
-    plt.close(fig)
+    plt.show()
+    # fig.savefig(file_path)
+    # plt.close(fig)
 
 
 def draw_oldest_chart(mangas_dict, file_path):
@@ -57,9 +60,12 @@ def draw_oldest_chart(mangas_dict, file_path):
     sorted_dates = sorted(items, key=sort_key)[:10]
 
     plt.rcdefaults()
+    sns.set_style("dark")
     fig, ax = plt.subplots()
 
-    # Example data
+    """ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)"""
+
     titles = tuple(adjust(dict_['name'])
                    for id_, dict_ in sorted_dates)
     y_pos = range(len(titles))
