@@ -1,0 +1,120 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Your MAL summary</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <style>
+        body {
+            background-color: rgb(253, 252, 255);
+        }
+
+        h1 {
+            text-align: center;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-size: 50px;
+        }
+
+        p {
+            text-align: center;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-size: 35px;
+        }
+
+        .section_box_horizontal {
+            clear: both;
+            margin: 0 auto;
+            width: 1000px;
+            /*float: center;*/
+        }
+
+        .text_part {
+            float: left;
+        }
+
+        .image_part {
+
+            width: auto;
+            margin: auto;
+            float: right;
+            display: block;
+        }
+
+        .section_box_vertical {
+            clear: both;
+            margin: 0 auto;
+            width: 1000px;
+        }
+
+        .text_vert_part {
+            float: center;
+        }
+
+        .gallery_part {
+            float: center;
+        }
+
+        div.gallery {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 180px;
+        }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <h1>Welcome to your MAL summary</h1>
+    <p>
+        I will show you some interesting facts about your manga list.
+        <br> Interested? <span style="color:blue"><b>Let's start!</b></span>
+    </p>
+    {% if masterpiece_list != [] -%}
+    <div class="section_box_vertical">
+        <div class="text_vert_part">
+            Well, those are titles which you consider as masterpieces:
+        </div>
+        <div class="gallery_part">
+            {% for item in masterpiece_list -%}
+            <div class="gallery">
+                <a target="_blank"
+                   href="{{ item.link }}">
+                <img src="{{ item.image }}"
+                     width="225"
+                     height="315">
+              </a>
+                <div class="desc">{{ item.name }}</div>
+            </div>
+            {%- endfor %}
+    {%- endif %}
+
+
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
