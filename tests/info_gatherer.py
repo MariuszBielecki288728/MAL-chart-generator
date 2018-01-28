@@ -5,7 +5,7 @@ import json
 sys.path.insert(0,
                 os.path.abspath(os.path.join(os.path.dirname(__file__),
                                              '..')))
-from MAL_chart_generator import DataLoader
+from MAL_chart_generator import data_loader
 from MAL_chart_generator import plots_generator
 
 
@@ -30,5 +30,5 @@ passwd = ''
 # save_obj(manga_dict, 'test_cache')
 manga_dict = load_obj('test_save')
 # plots_generator.draw_genres_pie(manga_dict, '')
-plots_generator.draw_avg_vs_u10_stem(manga_dict, '')
+plots_generator.draw_biggest_dif_stem(manga_dict, '')
 # plots_generator.draw_oldest_chart(manga_dict, '')

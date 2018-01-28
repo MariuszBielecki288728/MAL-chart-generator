@@ -8,7 +8,7 @@ from dateutil.parser import parse
 
 def adjust(name):
     triggered = False
-    while len(name) > 18:
+    while len(name) > 21:
         triggered = True
         name = name.rsplit(' ', 1)[0]
     return name + ('...' if triggered else '')
@@ -103,8 +103,8 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
                        'user_score': user_score})
 
     # Reorder it following the values of the first value:
-    ordered_df = df.sort_values(by='user_score')
-    #ordered_df = df
+    # ordered_df = df.sort_values(by='user_score')
+    ordered_df = df
     my_range = range(1, len(df.index) + 1)
 
     # The vertical plot is made using the hline function
@@ -126,6 +126,7 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
                 color='blue',
                 alpha=0.4,
                 label='Your score')
+    plt.gca().invert_yaxis()
     plt.legend()
 
     # Add title and axis names
@@ -138,15 +139,38 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
     plt.show()
 
 
-def draw_avg_vs_u10_stem(manga_dict, file_path):
+def draw_avg_vs_u10_stem(mangas_dict, file_path):
     masterpieces = [{'name': dict_['name'],
                      'avg_score': dict_['avg_score']}
-                    for id_, dict_ in manga_dict.items()
+                    for id_, dict_ in mangas_dict.items()
                     if dict_['user_score'] == '10']
 
     labels = [adjust(dict_['name']) for dict_ in masterpieces]
     avg_score = [float(dict_['avg_score']) for dict_ in masterpieces]
     user_score = [10.0 for i in range(len(avg_score))]
+
+    draw_dif_stem(avg_score,
+                  user_score,
+                  labels,
+                  '')
+
+
+def draw_biggest_dif_stem(mangas_dict, file_path):
+
+    items = (dict_  # throw away all titles without valid scores
+             for id_, dict_ in mangas_dict.items()
+             if (dict_['user_score'] != '0'
+                 and dict_['avg_score'] != '0'))
+
+    def sort_key(x):
+        return abs(float(x['avg_score']) - float(x['user_score']))
+
+    sorted_items = sorted(items, key=sort_key, reverse=True)[:15]
+
+    labels = [adjust(dict_['name']) for dict_ in sorted_items]
+    avg_score = [float(dict_['avg_score']) for dict_ in sorted_items]
+    user_score = [float(dict_['user_score']) for dict_ in sorted_items]
+
     draw_dif_stem(avg_score,
                   user_score,
                   labels,
