@@ -61,7 +61,7 @@ def create_manga_dict(item):
     user_score = item.my_score.string
 
     url = 'https://myanimelist.net/includes/ajax.inc.php'
-    params = {'t': ('64' if list_type == 'anime' else '65'),
+    params = {'t': 'manga',
               'id': db_id}
     title_data_soup = request_retryer(url, params=params)
 
