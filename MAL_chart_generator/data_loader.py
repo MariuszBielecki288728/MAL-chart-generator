@@ -41,8 +41,6 @@ def request_retryer(url, user_name='', user_passwd='', **kwargs):
                 timeout=timeout)
         if response.status_code == 200:
             return BeautifulSoup(response.content, "html.parser")
-        elif response.status_code == 204:
-            raise Exception("Couldn't find manga: " + url)
         else:
             time.sleep(retry_interval)
 
@@ -50,7 +48,55 @@ def request_retryer(url, user_name='', user_passwd='', **kwargs):
     # raise Exception("Unhandled response: " + response.status_code)
 
 
-def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
+def create_manga_dict(item):
+    db_id = item.series_mangadb_id.string
+    name = item.series_title.string
+
+    start_date = item.series_start.string
+    end_date = item.series_end.string
+    image = item.series_image.string
+
+    user_start_date = item.my_start_date.string
+    user_end_date = item.my_finish_date.string
+    user_score = item.my_score.string
+
+    url = 'https://myanimelist.net/includes/ajax.inc.php'
+    params = {'t': ('64' if list_type == 'anime' else '65'),
+              'id': db_id}
+    title_data_soup = request_retryer(url, params=params)
+
+    divs = title_data_soup.find_all('div')
+
+    genres_str = divs[2].span.next_sibling.string
+    genres_list = genres_str.strip().split(', ')
+
+    avg_score = divs[5].span.next_sibling.string.strip()
+    ranked = divs[6].span.next_sibling.string.strip()
+    popularity = divs[7].span.next_sibling.string.strip()
+
+    dict_ = {'name': name,
+             'genres': genres_list,
+             'avg_score': avg_score,
+             'ranked': ranked[1:],
+             'popularity': popularity[1:],
+             'start_date': start_date,
+             'end_date': end_date,
+             'image': image,
+
+             'user_start_date': user_start_date,
+             'user_end_date': user_end_date,
+             'user_score': user_score}
+
+    return (db_id, dict_)
+
+
+# TODO
+def create_anime_dict(item):
+    pass
+
+
+# TODO add anime support, rename vars to be more universal
+def gather_titles_info(user_name, user_passwd, **kwargs):
     """
         Gathers information about user and mangas (from list) to (soup, dict)
         shows progress bar in console
@@ -58,76 +104,50 @@ def gather_mangas_info(user_name, user_passwd, list_type, **kwargs):
         Arguments:
             user_name - username used to log in myanimelist.net
             user_passwd - password used to log in myanimelist.net
-            list_type - type of list (manga or anime)
 
         Optional arguments:
+            list_type - type of list (manga or anime)
             custom_user    - user whose list will be downloaded
 
     """
 
     user = kwargs.get('custom_user', user_name)
+    list_type = kwargs.get('list_type', 'manga')
+
+    if list_type not in ['manga', 'anime']:
+        raise ValueError("list_type must be 'anime' or 'manga'")
 
     url = 'http://myanimelist.net/malappinfo.php'
     params = {'u': user,
               'status': 'all',
               'type': list_type}
 
-    manga_list_soup = request_retryer(url, params=params)
-    user_info_soup = manga_list_soup.myinfo
-    mangas = manga_list_soup.find_all('manga')
+    list_soup = request_retryer(url, params=params)
+    user_info_soup = list_soup.myinfo
+    entries = list_soup.find_all(list_type)
     # 1/watching, 2/completed, 3/onhold, 4/dropped, 6/plantowatch
 
-    manga_dict = dict()
+    id_dict = dict()
 
-    mangas_num = len(mangas)
-    bar = progressbar.ProgressBar(max_value=mangas_num)
+    titles_num = len(entries)
+    bar = progressbar.ProgressBar(max_value=titles_num)
 
-    for count, item in enumerate(mangas):
+    if list_type == 'manga':
+        create_dict = create_manga_dict
+    else:
+        create_dict = create_anime_dict
+
+    for count, item in enumerate(entries):
         bar.update(count)
 
+        # only watching and completed
         if item.my_status.string not in ['1', '2']:
             continue
-
-        db_id = item.series_mangadb_id.string
-        name = item.series_title.string
-
-        start_date = item.series_start.string
-        end_date = item.series_end.string
-        image = item.series_image.string
-
-        user_start_date = item.my_start_date.string
-        user_end_date = item.my_finish_date.string
-        user_score = item.my_score.string
-
-        url = 'https://myanimelist.net/includes/ajax.inc.php'
-        params = {'t': '65',
-                  'id': db_id}
-        title_data_soup = request_retryer(url, params=params)
-
-        divs = title_data_soup.find_all('div')
-
-        genres_str = divs[2].span.next_sibling.string
-        genres_list = genres_str.strip().split(', ')
-
-        avg_score = divs[5].span.next_sibling.string.strip()
-        ranked = divs[6].span.next_sibling.string.strip()
-        popularity = divs[7].span.next_sibling.string.strip()
-
-        manga_dict[db_id] = {'name': name,
-                             'genres': genres_list,
-                             'avg_score': avg_score,
-                             'ranked': ranked[1:],
-                             'popularity': popularity[1:],
-                             'start_date': start_date,
-                             'end_date': end_date,
-                             'image': image,
-
-                             'user_start_date': user_start_date,
-                             'user_end_date': user_end_date,
-                             'user_score': user_score}
+        db_id, dict_ = create_dict(item)
+        id_dict[db_id] = dict_
         time.sleep(random.randint(4, 6))
 
-    bar.update(mangas_num)
+    bar.update(titles_num)
     bar.finish()
 
-    return (user_info_soup, manga_dict)
+    return (user_info_soup, id_dict)
