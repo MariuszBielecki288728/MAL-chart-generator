@@ -1,0 +1,8 @@
+requests
+bs4
+progressbar2
+matplotlib
+seaborn
+pandas
+python-dateutil
+jinja2

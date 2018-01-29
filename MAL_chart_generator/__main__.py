@@ -13,12 +13,12 @@ def render_page(titles_dict, user_name, list_type):
                      'name': dict_['name'].encode('utf-8')}
                     for id_, dict_ in titles_dict.items()
                     if dict_['user_score'] == '10']
-    masterpieces_dif_img = 'mastepieces_dif.png'
-    big_dif_img = 'big_dif.png'
-    small_dif_img = 'small_dif.png'
-    oldest_img = 'oldest.png'
-    youngest_img = 'youngest.png'
-    genres_pie_img = 'genres_pie.png'
+    masterpieces_dif_img = 'mastepieces_dif_' + list_type + '.png'
+    big_dif_img = 'big_dif_' + list_type + '.png'
+    small_dif_img = 'small_dif_' + list_type + '.png'
+    oldest_img = 'oldest_' + list_type + '.png'
+    youngest_img = 'youngest_' + list_type + '.png'
+    genres_pie_img = 'genres_pie_' + list_type + '.png'
     processes = []
 
     processes.append(Process(target=plots_generator.draw_avg_vs_u10_stem,

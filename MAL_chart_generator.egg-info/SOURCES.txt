@@ -1,0 +1,13 @@
+README.md
+setup.py
+MAL_chart_generator/__init__.py
+MAL_chart_generator/__main__.py
+MAL_chart_generator/data_loader.py
+MAL_chart_generator/plots_generator.py
+MAL_chart_generator.egg-info/PKG-INFO
+MAL_chart_generator.egg-info/SOURCES.txt
+MAL_chart_generator.egg-info/dependency_links.txt
+MAL_chart_generator.egg-info/requires.txt
+MAL_chart_generator.egg-info/top_level.txt
+MAL_chart_generator/templates/result_template.html
+MAL_chart_generator/templates/result_template2.html
