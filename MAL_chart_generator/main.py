@@ -2,6 +2,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import json
 import plots_generator
 
+
 def load_obj(name):
     with open(name + '.json', 'r') as f:
         return json.loads(f.read())
@@ -27,12 +28,18 @@ big_dif_img = 'big_dif.png'
 plots_generator.draw_biggest_dif_stem(manga_dict, big_dif_img)
 small_dif_img = 'small_dif.png'
 plots_generator.draw_biggest_dif_stem(manga_dict, small_dif_img, rev=True)
+oldest_img = 'oldest.png'
+plots_generator.draw_oldest_chart(manga_dict, oldest_img)
+youngest_img = 'youngest.png'
+plots_generator.draw_oldest_chart(manga_dict, youngest_img, rev=True)
 rendered = template.render(user_name='MariuszB',
                            titles_num=20,
                            masterpiece_list=masterpieces,
                            masterpieces_dif_img=masterpieces_dif_img,
                            big_dif_img=big_dif_img,
-                           small_dif_img=small_dif_img
+                           small_dif_img=small_dif_img,
+                           oldest_img=oldest_img,
+                           youngest_img=youngest_img
                            )
 
 with open('result.html', 'w') as f:

@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import seaborn as sns
 import pandas as pd
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
 
 
@@ -46,48 +46,78 @@ def draw_genres_pie(mangas_dict, file_path):
     plt.close()
 
 
-def draw_oldest_chart(mangas_dict, file_path):
+def draw_oldest_chart(manga_dict, file_path, rev=False):
+
     plt.ioff()
 
     def strip_date(date):
         if date[-5:] == '00-00':
-            return date[:-6]
+            return date[:-6] + '-01-01'
         elif date[-2:] == '00':
-            return date[:-3]
+            return date[:-3] + '-01'
         else:
             return date
 
     def sort_key(x):
-        return parse(strip_date(x[1]['start_date']))
+        start_date = parse(strip_date(x[1]['start_date']))
+        if x[1]['end_date'] == '0000-00-00':
+            end_date = datetime.now()
+        else:
+            end_date = parse(strip_date(x[1]['end_date']))
+        return abs(end_date - start_date)
 
-    items = ((id_, dict_)  # throw away all titles without valid dates
-             for id_, dict_ in mangas_dict.items()
+    items = ((id_, dict_)  # throw away all titles without valid start dates
+             for id_, dict_ in manga_dict.items()
              if dict_['start_date'] != '0000-00-00')
-    sorted_dates = sorted(items, key=sort_key)[:10]
+
+    sorted_dates = sorted(items, key=sort_key, reverse=(not rev))[:10]
 
     plt.rcdefaults()
-    sns.set_style("dark")
-    fig, ax = plt.subplots()
 
-    """ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)"""
-
-    titles = tuple(adjust(dict_['name'])
-                   for id_, dict_ in sorted_dates)
-    y_pos = range(len(titles))
+    labels = [adjust(dict_['name'])
+              for id_, dict_ in sorted_dates]
 
     today = datetime.now()
-    performance = [relativedelta(today,
-                                 parse(strip_date(dict_['start_date']))).years
-                   for id_, dict_ in sorted_dates]
 
-    ax.barh(y_pos, performance,
-            color='blue')
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(titles)
-    ax.invert_yaxis()  # labels read top-to-bottom
-    ax.set_xlabel('Years')
-    ax.set_title('The oldest titles in your list')
+    start_dates = [parse(strip_date(dict_["start_date"]))
+                   for id_, dict_ in sorted_dates]
+    end_dates = [(parse(strip_date(dict_["end_date"]))
+                  if dict_["end_date"] != '0000-00-00'
+                  else today.date())
+                 for id_, dict_ in sorted_dates]
+
+    my_range = range(1, len(labels) + 1)
+
+    plt.hlines(y=my_range,
+               xmin=start_dates,
+               xmax=end_dates,
+               color='silver',
+               alpha=0.4)
+
+    plt.scatter(start_dates,
+                my_range,
+                color='deepskyblue',
+                alpha=1,
+                label='Start date')
+
+    plt.scatter(end_dates,
+                my_range,
+                color='red',
+                alpha=0.4,
+                label='Finish date')
+    plt.gca().invert_yaxis()
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    if rev:
+        interval = 2
+    else:
+        interval = 5
+    plt.gca().xaxis.set_major_locator(mdates.YearLocator(interval))
+    plt.legend()
+
+    plt.yticks(my_range, labels)
+    # plt.title("title", loc='left')
+    plt.xlabel('Year')
     plt.tight_layout()
     plt.savefig(file_path, bbox_inches='tight')
     plt.close()
@@ -110,21 +140,21 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
 
     # The vertical plot is made using the hline function
     # I load the seaborn library only to benefit the nice looking feature
-    import seaborn as sns
+    # import seaborn as sns
     plt.hlines(y=my_range,
                xmin=ordered_df['avg_score'],
                xmax=ordered_df['user_score'],
-               color='grey',
+               color='silver',
                alpha=0.4)
     plt.scatter(ordered_df['avg_score'],
                 my_range,
-                color='purple',
+                color='deepskyblue',
                 alpha=1,
                 label='Avarage score')
 
     plt.scatter(ordered_df['user_score'],
                 my_range,
-                color='blue',
+                color='red',
                 alpha=0.4,
                 label='Your score')
     plt.gca().invert_yaxis()
