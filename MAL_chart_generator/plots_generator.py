@@ -133,14 +133,9 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
                        'avg_score': avg_score,
                        'user_score': user_score})
 
-    # Reorder it following the values of the first value:
-    # ordered_df = df.sort_values(by='user_score')
     ordered_df = df
     my_range = range(1, len(df.index) + 1)
 
-    # The vertical plot is made using the hline function
-    # I load the seaborn library only to benefit the nice looking feature
-    # import seaborn as sns
     plt.hlines(y=my_range,
                xmin=ordered_df['avg_score'],
                xmax=ordered_df['user_score'],
@@ -165,7 +160,6 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
     plt.title(plot_title, loc='left')
     plt.xlabel('Score')
     plt.tight_layout()
-    # plt.ylabel('Group')
 
     plt.savefig(file_path, bbox_inches='tight')
     plt.close()
