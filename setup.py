@@ -11,10 +11,10 @@ setup(name='MAL_chart_generator',
       install_requires=[
           'requests',
           'bs4',
-          'progressbar',
+          'progressbar2',
           'matplotlib',
           'seaborn',
           'pandas',
-          'dateutil',
+          'python-dateutil',
           'jinja2']
       )
