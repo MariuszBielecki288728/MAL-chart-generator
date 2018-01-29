@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module MAL_chart_generator.data_loader</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="MAL_chart_generator.html"><font color="#ffffff">MAL_chart_generator</font></a>.data_loader</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:d%3A%5Conedrive%20-%20uniwersytet%20wroc%C5%82awski%5Cmal-chart-generator%5Cmal_chart_generator%5Cdata_loader.py">d:\onedrive - uniwersytet wrocławski\mal-chart-generator\mal_chart_generator\data_loader.py</a></font></td></tr></table>
+    <p><tt>countains&nbsp;functions&nbsp;that&nbsp;manage&nbsp;data&nbsp;downloading:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-gather_titles_info">gather_titles_info</a>(user_name,&nbsp;user_passwd='',&nbsp;**kwargs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;(user_info_soup,&nbsp;id_dict)</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="progressbar.html">progressbar</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="requests.html">requests</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-create_anime_dict"><strong>create_anime_dict</strong></a>(item)</dt><dd><tt>Parsing&nbsp;soup,&nbsp;downloads&nbsp;additional&nbsp;data&nbsp;and&nbsp;compiling&nbsp;everything&nbsp;in&nbsp;dict</tt></dd></dl>
+ <dl><dt><a name="-create_manga_dict"><strong>create_manga_dict</strong></a>(item)</dt><dd><tt>Parsing&nbsp;soup,&nbsp;downloads&nbsp;additional&nbsp;data&nbsp;and&nbsp;compiling&nbsp;everything&nbsp;in&nbsp;dict</tt></dd></dl>
+ <dl><dt><a name="-gather_titles_info"><strong>gather_titles_info</strong></a>(user_name, user_passwd='', **kwargs)</dt><dd><tt>Gathers&nbsp;information&nbsp;about&nbsp;user&nbsp;and&nbsp;mangas&nbsp;(from&nbsp;list)&nbsp;to&nbsp;(soup,&nbsp;dict)<br>
+shows&nbsp;progress&nbsp;bar&nbsp;in&nbsp;console<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user_name&nbsp;-&nbsp;username&nbsp;used&nbsp;to&nbsp;log&nbsp;in&nbsp;myanimelist.net<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user_passwd&nbsp;-&nbsp;password&nbsp;used&nbsp;to&nbsp;log&nbsp;in&nbsp;myanimelist.net<br>
+&nbsp;<br>
+Optional&nbsp;arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;list_type&nbsp;-&nbsp;type&nbsp;of&nbsp;list&nbsp;(manga&nbsp;or&nbsp;anime)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;custom_user&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;user&nbsp;whose&nbsp;list&nbsp;will&nbsp;be&nbsp;downloaded</tt></dd></dl>
+ <dl><dt><a name="-request_retryer"><strong>request_retryer</strong></a>(url, user_name='', user_passwd='', **kwargs)</dt><dd><tt>sends&nbsp;request&nbsp;and&nbsp;(if&nbsp;response&nbsp;is&nbsp;wrong)&nbsp;trying&nbsp;again&nbsp;few&nbsp;more&nbsp;times<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;-&nbsp;link&nbsp;to&nbsp;send&nbsp;request<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user_name&nbsp;-&nbsp;username&nbsp;used&nbsp;to&nbsp;log&nbsp;in&nbsp;myanimelist.net<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user_passwd&nbsp;-&nbsp;password&nbsp;used&nbsp;to&nbsp;log&nbsp;in&nbsp;myanimelist.net<br>
+&nbsp;<br>
+Optional&nbsp;arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;retries_number&nbsp;-&nbsp;number&nbsp;of&nbsp;retries&nbsp;to&nbsp;get&nbsp;list&nbsp;from&nbsp;MAL&nbsp;server<br>
+&nbsp;&nbsp;&nbsp;&nbsp;retry_interval&nbsp;-&nbsp;time&nbsp;beetwen&nbsp;consecutive&nbsp;retries<br>
+&nbsp;&nbsp;&nbsp;&nbsp;retry_timeout&nbsp;&nbsp;-&nbsp;timeout&nbsp;of&nbsp;single&nbsp;retry<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params&nbsp;-&nbsp;params&nbsp;for&nbsp;GET&nbsp;request</tt></dd></dl>
+</td></tr></table>
+</body></html>

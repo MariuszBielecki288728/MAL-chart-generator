@@ -1,3 +1,6 @@
+"""
+    Contains functions to manage data and (using it) draw plots
+"""
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sns
@@ -15,6 +18,10 @@ def adjust(name):
 
 
 def draw_genres_pie(mangas_dict, file_path):
+    """
+        draws pie-plot with most frequent genres in user list
+        and saves it to a file_path
+    """
     plt.ioff()
     sns.set_style("dark")
     appear_freq_dict = dict()
@@ -47,6 +54,11 @@ def draw_genres_pie(mangas_dict, file_path):
 
 
 def draw_oldest_chart(manga_dict, file_path, rev=False):
+    """
+        draws lolipop plot with titles that were published
+        for the biggest(smallest) period of time in user list
+        and saves it to a file_path
+    """
 
     plt.ioff()
 
@@ -166,6 +178,10 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
 
 
 def draw_avg_vs_u10_stem(mangas_dict, file_path):
+    """
+        draws lolipop plot presenting difference between user score of 10
+        and avarage score, then saves it to a file_path
+    """
     masterpieces = [{'name': dict_['name'],
                      'avg_score': dict_['avg_score']}
                     for id_, dict_ in mangas_dict.items()
@@ -182,6 +198,11 @@ def draw_avg_vs_u10_stem(mangas_dict, file_path):
 
 
 def draw_biggest_dif_stem(mangas_dict, file_path, rev=False):
+    """
+        draws lolipop plot presenting titles with the biggest(smallest)
+        difference between user score and avarage score,
+        then saves it to a file_path
+    """
 
     items = (dict_  # throw away all titles without valid scores
              for id_, dict_ in mangas_dict.items()

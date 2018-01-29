@@ -1,3 +1,9 @@
+"""
+countains functions that manage data downloading:
+
+    gather_titles_info(user_name, user_passwd='', **kwargs)
+            -> (user_info_soup, id_dict)
+"""
 import requests
 from bs4 import BeautifulSoup
 import progressbar
@@ -49,6 +55,9 @@ def request_retryer(url, user_name='', user_passwd='', **kwargs):
 
 
 def create_manga_dict(item):
+    """
+    Parsing soup, downloads additional data and compiling everything in dict
+    """
     db_id = item.series_mangadb_id.string
     name = item.series_title.string
 
@@ -91,6 +100,9 @@ def create_manga_dict(item):
 
 
 def create_anime_dict(item):
+    """
+    Parsing soup, downloads additional data and compiling everything in dict
+    """
     db_id = item.series_animedb_id.string
     name = item.series_title.string
 
