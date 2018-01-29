@@ -106,15 +106,14 @@ def create_anime_dict(item):
     params = {'t': '64',
               'id': db_id}
     title_data_soup = request_retryer(url, params=params)
-
     spans = title_data_soup.find_all('span')
 
-    genres_str = spans[0].span.next_sibling.string
+    genres_str = spans[0].next_sibling.string
     genres_list = genres_str.strip().split(', ')
 
-    avg_score = spans[4].span.next_sibling.string.strip()
-    ranked = spans[5].span.next_sibling.string.strip()
-    popularity = spans[6].span.next_sibling.string.strip()
+    avg_score = spans[4].next_sibling.string.strip()
+    ranked = spans[5].next_sibling.string.strip()
+    popularity = spans[6].next_sibling.string.strip()
 
     dict_ = {'name': name,
              'genres': genres_list,
@@ -132,7 +131,7 @@ def create_anime_dict(item):
     return (db_id, dict_)
 
 
-def gather_titles_info(user_name, user_passwd, **kwargs):
+def gather_titles_info(user_name, user_passwd='', **kwargs):
     """
         Gathers information about user and mangas (from list) to (soup, dict)
         shows progress bar in console

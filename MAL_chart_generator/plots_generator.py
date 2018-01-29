@@ -70,7 +70,7 @@ def draw_oldest_chart(manga_dict, file_path, rev=False):
              for id_, dict_ in manga_dict.items()
              if dict_['start_date'] != '0000-00-00')
 
-    sorted_dates = sorted(items, key=sort_key, reverse=(not rev))[:10]
+    sorted_dates = sorted(items, key=sort_key, reverse=(not rev))[:14]
 
     plt.rcdefaults()
 
@@ -191,7 +191,7 @@ def draw_biggest_dif_stem(mangas_dict, file_path, rev=False):
     def sort_key(x):
         return abs(float(x['avg_score']) - float(x['user_score']))
 
-    sorted_items = sorted(items, key=sort_key, reverse=(not rev))[:15]
+    sorted_items = sorted(items, key=sort_key, reverse=(not rev))[:14]
 
     labels = [adjust(dict_['name']) for dict_ in sorted_items]
     avg_score = [float(dict_['avg_score']) for dict_ in sorted_items]
