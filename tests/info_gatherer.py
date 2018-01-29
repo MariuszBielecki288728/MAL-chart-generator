@@ -29,6 +29,6 @@ passwd = ''
 
 # save_obj(manga_dict, 'test_cache')
 manga_dict = load_obj('test_save')
-# plots_generator.draw_genres_pie(manga_dict, '')
-plots_generator.draw_biggest_dif_stem(manga_dict, 'big_dif.png')
+plots_generator.draw_oldest(manga_dict, '', rev=True)
+# plots_generator.draw_biggest_dif_stem(manga_dict, 'big_dif.png')
 # plots_generator.draw_oldest_chart(manga_dict, '')
