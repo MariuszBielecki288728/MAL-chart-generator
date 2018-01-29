@@ -42,12 +42,12 @@ def draw_genres_pie(mangas_dict, file_path):
             wedgeprops={'linewidth': 7, 'edgecolor': 'white'})
     p = plt.gcf()
     p.gca().add_artist(my_circle)
-    plt.show()
-    # fig.savefig(file_path)
-    # plt.close(fig)
+    plt.savefig(file_path, bbox_inches='tight')
+    plt.close()
 
 
 def draw_oldest_chart(mangas_dict, file_path):
+    plt.ioff()
 
     def strip_date(date):
         if date[-5:] == '00-00':
@@ -89,11 +89,12 @@ def draw_oldest_chart(mangas_dict, file_path):
     ax.set_xlabel('Years')
     ax.set_title('The oldest titles in your list')
     plt.tight_layout()
-    plt.show()
-    # plt.close(fig)
+    plt.savefig(file_path, bbox_inches='tight')
+    plt.close()
 
 
 def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
+    plt.ioff()
 
     plot_title = kwargs.get('plot_title',
                             'Comparison of the avarage score and your score')
@@ -136,7 +137,8 @@ def draw_dif_stem(avg_score, user_score, labels, file_path, **kwargs):
     plt.tight_layout()
     # plt.ylabel('Group')
 
-    plt.show()
+    plt.savefig(file_path, bbox_inches='tight')
+    plt.close()
 
 
 def draw_avg_vs_u10_stem(mangas_dict, file_path):
@@ -152,10 +154,10 @@ def draw_avg_vs_u10_stem(mangas_dict, file_path):
     draw_dif_stem(avg_score,
                   user_score,
                   labels,
-                  '')
+                  file_path)
 
 
-def draw_biggest_dif_stem(mangas_dict, file_path):
+def draw_biggest_dif_stem(mangas_dict, file_path, rev=False):
 
     items = (dict_  # throw away all titles without valid scores
              for id_, dict_ in mangas_dict.items()
@@ -165,7 +167,7 @@ def draw_biggest_dif_stem(mangas_dict, file_path):
     def sort_key(x):
         return abs(float(x['avg_score']) - float(x['user_score']))
 
-    sorted_items = sorted(items, key=sort_key, reverse=True)[:15]
+    sorted_items = sorted(items, key=sort_key, reverse=(not rev))[:15]
 
     labels = [adjust(dict_['name']) for dict_ in sorted_items]
     avg_score = [float(dict_['avg_score']) for dict_ in sorted_items]
@@ -174,4 +176,4 @@ def draw_biggest_dif_stem(mangas_dict, file_path):
     draw_dif_stem(avg_score,
                   user_score,
                   labels,
-                  '')
+                  file_path)
