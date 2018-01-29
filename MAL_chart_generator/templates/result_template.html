@@ -42,7 +42,11 @@
 
     div.gallery img {
         width: 100%;
+        {% if list_type == 'manga' -%}
+        height: auto;
+        {% else %}
         height: 250px;
+        {%- endif %}
     }
 
     div.desc {

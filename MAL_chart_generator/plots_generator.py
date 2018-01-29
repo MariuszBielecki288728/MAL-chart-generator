@@ -9,9 +9,9 @@ from datetime import datetime
 from dateutil.parser import parse
 
 
-def adjust(name):
+def adjust(name, a=21):
     triggered = False
-    while len(name) > 21:
+    while len(name) > a:
         triggered = True
         name = name.rsplit(' ', 1)[0]
     return name + ('...' if triggered else '')

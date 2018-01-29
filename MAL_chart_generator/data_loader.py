@@ -28,8 +28,8 @@ def request_retryer(url, user_name='', user_passwd='', **kwargs):
 
     """
 
-    retries = kwargs.get('retries_number', 5)
-    retry_interval = kwargs.get('retry_interval', 5)
+    retries = kwargs.get('retries_number', 10)
+    retry_interval = kwargs.get('retry_interval', 4)
     timeout = kwargs.get('retry_timeout', 10)
     params = kwargs.get('params', None)
 
@@ -192,7 +192,7 @@ def gather_titles_info(user_name, user_passwd='', **kwargs):
             continue
         db_id, dict_ = create_dict(item)
         id_dict[db_id] = dict_
-        time.sleep(random.randint(4, 6))
+        time.sleep(random.randint(3, 5))
 
     bar.update(titles_num)
     bar.finish()
