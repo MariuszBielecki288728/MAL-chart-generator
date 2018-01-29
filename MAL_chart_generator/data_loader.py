@@ -61,7 +61,7 @@ def create_manga_dict(item):
     user_score = item.my_score.string
 
     url = 'https://myanimelist.net/includes/ajax.inc.php'
-    params = {'t': 'manga',
+    params = {'t': '65',
               'id': db_id}
     title_data_soup = request_retryer(url, params=params)
 
@@ -90,12 +90,48 @@ def create_manga_dict(item):
     return (db_id, dict_)
 
 
-# TODO
 def create_anime_dict(item):
-    pass
+    db_id = item.series_animedb_id.string
+    name = item.series_title.string
+
+    start_date = item.series_start.string
+    end_date = item.series_end.string
+    image = item.series_image.string
+
+    user_start_date = item.my_start_date.string
+    user_end_date = item.my_finish_date.string
+    user_score = item.my_score.string
+
+    url = 'https://myanimelist.net/includes/ajax.inc.php'
+    params = {'t': '64',
+              'id': db_id}
+    title_data_soup = request_retryer(url, params=params)
+
+    spans = title_data_soup.find_all('span')
+
+    genres_str = spans[0].span.next_sibling.string
+    genres_list = genres_str.strip().split(', ')
+
+    avg_score = spans[4].span.next_sibling.string.strip()
+    ranked = spans[5].span.next_sibling.string.strip()
+    popularity = spans[6].span.next_sibling.string.strip()
+
+    dict_ = {'name': name,
+             'genres': genres_list,
+             'avg_score': avg_score,
+             'ranked': ranked[1:],
+             'popularity': popularity[1:],
+             'start_date': start_date,
+             'end_date': end_date,
+             'image': image,
+
+             'user_start_date': user_start_date,
+             'user_end_date': user_end_date,
+             'user_score': user_score}
+
+    return (db_id, dict_)
 
 
-# TODO add anime support, rename vars to be more universal
 def gather_titles_info(user_name, user_passwd, **kwargs):
     """
         Gathers information about user and mangas (from list) to (soup, dict)
