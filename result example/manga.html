@@ -43,6 +43,7 @@
     div.gallery img {
         width: 100%;
         height: auto;
+        
     }
 
     div.desc {
@@ -58,7 +59,7 @@
         <div class="w3-bar w3-red w3-card w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
             <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Manga</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Anime</a>
+            <a href="anime.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Anime</a>
         </div>
 
         <!-- Navbar on small screens -->
@@ -71,53 +72,96 @@
     <!-- Header -->
     <header class="w3-container w3-red w3-center" style="padding:128px 16px">
         <h1 class="w3-margin w3-jumbo">Your MAL summary</h1>
-        <p class="w3-xlarge">{{ user_name }}</p>
+        <p class="w3-xlarge">MariuszB</p>
     </header>
-    {% if titles_num > 10 -%}
     <!-- First Grid -->
     <div class="w3-row-padding w3-padding-64 w3-container">
-        {% if masterpiece_list != [] -%}
         <div class="w3-content">
             <h4 class="w3-padding-8" style="text-align:center;">
                 Titles you consider as masterpieces.</h5>
             <div class="gallery_part">
-                {% for item in masterpiece_list -%}
                 <div class="gallery">
                     <a target="_blank"
-                       href="{{ item.link }}">
-                    <img src="{{ item.image }}"
+                       href="https://myanimelist.net/manga/56805">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/1/120529.jpg"
                          width="225"
                          height="315">
                   </a>
-                    <div class="desc">{{ item.name }}</div>
+                    <div class="desc">Koe no Katachi</div>
+                </div><div class="gallery">
+                    <a target="_blank"
+                       href="https://myanimelist.net/manga/4608">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/3/160213.jpg"
+                         width="225"
+                         height="315">
+                  </a>
+                    <div class="desc">Break Blade</div>
+                </div><div class="gallery">
+                    <a target="_blank"
+                       href="https://myanimelist.net/manga/46282">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/4/155148.jpg"
+                         width="225"
+                         height="315">
+                  </a>
+                    <div class="desc">Chikan Otoko</div>
+                </div><div class="gallery">
+                    <a target="_blank"
+                       href="https://myanimelist.net/manga/50217">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/1/143365.jpg"
+                         width="225"
+                         height="315">
+                  </a>
+                    <div class="desc">Kamisama ga Uso...</div>
+                </div><div class="gallery">
+                    <a target="_blank"
+                       href="https://myanimelist.net/manga/14065">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/3/20001.jpg"
+                         width="225"
+                         height="315">
+                  </a>
+                    <div class="desc">Yumekui Merry</div>
+                </div><div class="gallery">
+                    <a target="_blank"
+                       href="https://myanimelist.net/manga/44347">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/3/80661.jpg"
+                         width="225"
+                         height="315">
+                  </a>
+                    <div class="desc">One Punch-Man</div>
+                </div><div class="gallery">
+                    <a target="_blank"
+                       href="https://myanimelist.net/manga/57765">
+                    <img src="https://myanimelist.cdn-dena.com/images/manga/1/112577.jpg"
+                         width="225"
+                         height="315">
+                  </a>
+                    <div class="desc">UQ Holder!</div>
                 </div>
-                {%- endfor %}
             </div>
         </div>
-    {%- endif %}
         <div class="w3-content" style="clear:both;">
           <div class="w3-third">
             <!--h1>Lorem Ipsum</h1-->
-            <h4 class="w3-padding-32">But what about community? Check out plot that shows the difference
-            between avarage score and your score.</h4>
+            <h4 class="w3-padding-32">But what about the community? Check out a plot that shows the differences
+            between the average score and your score.</h4>
 
         </div>
 
         <div class="w3-twothird w3-center">
-            <img class="w3-image" src="{{ masterpieces_dif_img }}" alt="difference plot">
+            <img class="w3-image" src="mastepieces_dif_manga.png" alt="difference plot">
         </div>
     </div>
 
     <div class="w3-content" style="clear:both;">
         <div class="w3-third">
             <!--h1>Lorem Ipsum</h1-->
-            <h4 class="w3-padding-32">Now, let's sort all titles on your list
+            <h4 class="w3-padding-32">Now, let's sort all the titles on your list
             by difference in scores (descending).</h4>
 
         </div>
 
         <div class="w3-twothird w3-center">
-            <img class="w3-image" src="{{ big_dif_img }}" alt="difference plot">
+            <img class="w3-image" src="big_dif_manga.png" alt="difference plot">
         </div>
     </div>
 
@@ -129,37 +173,46 @@
         </div>
 
         <div class="w3-twothird w3-center">
-            <img class="w3-image" src="{{ small_dif_img }}" alt="difference plot">
+            <img class="w3-image" src="small_dif_manga.png" alt="difference plot">
         </div>
     </div>
 
     <div class="w3-content" style="clear:both;">
         <div class="w3-third">
             <!--h1>Lorem Ipsum</h1-->
-            <h4 class="w3-padding-32">Now let's look at the title which
-            were published for the longest period of time.</h4>
+            <h4 class="w3-padding-32">Now let's look at the titles which
+            were being published for the longest period of time.</h4>
 
         </div>
 
         <div class="w3-twothird w3-center">
-            <img class="w3-image" src="{{ oldest_img }}" alt="difference plot">
+            <img class="w3-image" src="oldest_manga.png" alt="difference plot">
         </div>
     </div>
 
     <div class="w3-content" style="clear:both;">
         <div class="w3-third">
             <!--h1>Lorem Ipsum</h1-->
-            <h4 class="w3-padding-32">And, again, in reverse</h4>
+            <h4 class="w3-padding-32">And again, in reverse</h4>
 
         </div>
 
         <div class="w3-twothird w3-center">
-            <img class="w3-image" src="{{ youngest_img }}" alt="difference plot">
+            <img class="w3-image" src="youngest_manga.png" alt="difference plot">
+        </div>
+    </div>
+
+    <div class="w3-content" style="clear:both;">
+            <!--h1>Lorem Ipsum</h1-->
+            <h4 class="w3-padding-32" style="text-align:center;">And finally, look at genres that are most popular
+            on your list</h4>
+
+        <div class="w3-center">
+            <img class="w3-image" src="genres_pie_manga.png" alt="difference plot">
         </div>
     </div>
 
     </div>
-    {%- endif %}
     <!-- Footer -->
     <footer class="w3-container w3-light-grey w3-padding-32 w3-center w3-opacity">
         <p>Generated by <a href="https://github.com/MariuszBielecki288728/MAL-chart-generator" target="_blank">MAL chart generator</a></p>
