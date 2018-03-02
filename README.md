@@ -1,5 +1,10 @@
 # MAL-chart-generator
-# Project for Extended Python course
-# README will be filled later
-# example can be found in "example" folder
-# to execute program - run __main__.py
+Program downloads information about [myanimelist.net](https://myanimelist.net/) user, then creates plots and combines them into two HTML files (anime.html and manga.html), that can be opened with web browser. Example output can be found in "result example" folder
+
+## Installation
+> python setup.py
+## Execution
+> python __main__.py
+
+
+
