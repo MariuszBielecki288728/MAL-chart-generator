@@ -7,4 +7,4 @@ Program downloads information about [myanimelist.net](https://myanimelist.net/) 
 > python __main__.py
 
 Example as screenshot from browser:
-![cyk](rusult example/result_example.png "example")
+![cyk]("rusult example/result_example.png" "example")
