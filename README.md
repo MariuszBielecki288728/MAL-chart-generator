@@ -5,7 +5,5 @@ Program downloads information about [myanimelist.net](https://myanimelist.net/) 
 > python setup.py
 ## Execution
 > python __main__.py
-
-Example as screenshot from browser:
-
+## Example
 ![cyk](result_example.png?raw=true "example")
